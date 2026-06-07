@@ -1,0 +1,17 @@
+[project]
+name = "comfy-ui-minecraft-pbr"
+description = "Pack PBR material maps (e.g. from ComfyUI-Chord) into labPBR 1.3 and Bedrock (RTX / Vibrant Visuals) resource-pack textures."
+version = "0.1.0"
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.10"
+# torch, numpy and Pillow are provided by the ComfyUI runtime.
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/eljaysun/comfy-ui-minecraft-pbr"
+BugTracker = "https://github.com/eljaysun/comfy-ui-minecraft-pbr/issues"
+
+[tool.comfy]
+PublisherId = "eljaysun"
+DisplayName = "ComfyUI Minecraft PBR"

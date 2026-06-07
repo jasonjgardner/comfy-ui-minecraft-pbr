@@ -1,0 +1,8 @@
+# Files excluded from the ComfyUI Registry package (dev-only).
+tests/
+.gitignore
+.git/
+__pycache__/
+**/__pycache__/
+*.pyc
+copilot_suggestions.md

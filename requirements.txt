@@ -1,0 +1,1 @@
+# No extra dependencies: torch, numpy and Pillow ship with ComfyUI.
