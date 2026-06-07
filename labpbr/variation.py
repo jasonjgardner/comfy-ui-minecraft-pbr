@@ -45,12 +45,11 @@ def slerp_latents(a: torch.Tensor, b: torch.Tensor, t: float) -> torch.Tensor:
 
 def _seeded_noise(source: torch.Tensor, seed: int, count: int) -> torch.Tensor:
     """``(count, *source.shape)`` Gaussian noise; variant ``i`` is seeded ``seed + i``."""
-    gen = torch.Generator(device="cpu")
-    layers = []
-    for i in range(count):
-        gen.manual_seed(int(seed) + i)
-        layers.append(torch.randn(source.shape, generator=gen, dtype=source.dtype))
-    return torch.stack(layers, dim=0).to(source.device)
+    def _one(i: int) -> torch.Tensor:
+        gen = torch.Generator(device="cpu").manual_seed(int(seed) + i)
+        return torch.randn(source.shape, generator=gen, dtype=source.dtype)
+
+    return torch.stack([_one(i) for i in range(count)], dim=0).to(source.device)
 
 
 def make_variation_batch(
@@ -74,5 +73,8 @@ def make_variation_batch(
         source = source[0]
     if noise is None:
         noise = _seeded_noise(source, seed, count)
+    expected = (count, *source.shape)
+    if noise.shape != torch.Size(expected):
+        raise ValueError(f"noise shape {tuple(noise.shape)} does not match expected {expected}")
     variants = [slerp_latents(source, noise[i], strength) for i in range(count)]
     return torch.stack(variants, dim=0)

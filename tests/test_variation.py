@@ -39,6 +39,12 @@ def main():
     assert not torch.equal(batch[0], batch[1]), "variants must differ from each other"
     print("  ok variants differ")
 
+    # strength 0 is a pass-through: every variant equals the source
+    passthrough = make_variation_batch(source, seed=42, count=3, strength=0.0)
+    assert torch.equal(passthrough[0], source) and torch.equal(passthrough[2], source), \
+        "strength=0 must return the source unchanged"
+    print("  ok strength=0 pass-through")
+
     # forward-compat seam: explicit noise overrides seeding
     pre = torch.randn(4, C, H, W, generator=torch.Generator().manual_seed(7))
     n1 = make_variation_batch(source, seed=0, count=4, strength=0.3, noise=pre)
