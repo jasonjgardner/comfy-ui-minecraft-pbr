@@ -25,6 +25,7 @@ from .normal import (
 )
 from .pack_bedrock import build_bedrock_normal, build_mer
 from .pack_labpbr import build_normal, build_specular
+from .variation import make_variation_batch, slerp_latents
 
 __all__ = [
     "luminance",
@@ -51,4 +52,6 @@ __all__ = [
     "build_mer",
     "build_normal",
     "build_specular",
+    "make_variation_batch",
+    "slerp_latents",
 ]
