@@ -9,9 +9,9 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.urls]
-Repository = "https://github.com/eljaysun/comfy-ui-minecraft-pbr"
-BugTracker = "https://github.com/eljaysun/comfy-ui-minecraft-pbr/issues"
+Repository = "https://github.com/jasonjgardner/comfy-ui-minecraft-pbr"
+BugTracker = "https://github.com/jasonjgardner/comfy-ui-minecraft-pbr/issues"
 
 [tool.comfy]
-PublisherId = "eljaysun"
+PublisherId = "jason"
 DisplayName = "ComfyUI Minecraft PBR"
