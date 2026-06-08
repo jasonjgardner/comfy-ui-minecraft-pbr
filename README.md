@@ -19,6 +19,7 @@ accept those maps from any source.
 | **Save Bedrock RTX** | writes `name.png`, `name_normal.png`, `name_mer.png` / `_mers.png` |
 | **Derive AO + Height** | AO (normal divergence) + POM height (Frankot–Chellappa) → two MASKs |
 | **Extract Emission** | luminance-threshold a basecolor → emission MASK |
+| **Latent Variation** | one source LATENT → a batch of N variant LATENTs for randomized blocks, CTM variant sets, and weathering states (clean → cracked → mossy → weathered) |
 
 `roughness` and `metalness` inputs accept **IMAGE or MASK**, so Chord's 1-channel
 IMAGE outputs wire straight in. The `_s` and `_n` textures flow as 4-channel RGBA
@@ -61,6 +62,26 @@ output into **Pack labPBR**'s `metal_mask` input. Painted pixels get that metal'
 labPBR id in the specular green channel (iron 230 … silver 237, custom 255), overriding
 both `hardcoded_metal` and the metalness threshold; unpainted pixels fall back to normal
 behaviour. Overlapping regions resolve last-wins (named metals over `custom`).
+
+## Latent variations
+
+Every node above works on IMAGE/MASK tensors; **Latent Variation** is the package's
+one LATENT node. It takes a single source LATENT and emits a batched LATENT of `count`
+variants for randomized blocks, Connected Textures (CTM) variant sets, and weathering
+states (clean → cracked → mossy → weathered).
+
+- **Model-free (default, no `model` wired):** seeded slerp perturbation of the source
+  latent. `variation_strength` 0 returns the source; higher values diverge more (and
+  decode noisier, since there is no denoise step).
+- **Guided (`model` + `positive` wired):** an img2img re-denoise through ComfyUI's
+  sampler, so output stays clean and `variation_strength` becomes the denoise amount.
+  The same conditioning is applied across the batch; variants differ by `seed`. Run it
+  twice with different prompts for, e.g., a mossy set vs a cracked set.
+
+Inputs: `samples` (LATENT), `count`, `seed`, `variation_strength`, plus optional
+`model` / `positive` / `negative` / `steps` / `cfg` / `sampler_name` / `scheduler`
+for the guided path. Wire a `VAE Decode` after it to feed the batched output into the
+Pack labPBR / Pack Bedrock RTX nodes.
 
 ## Install
 
