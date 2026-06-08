@@ -30,7 +30,7 @@ involvement); this node introduces the first latent-space workflow.
 ## Interface
 
 **Class:** `MinecraftLatentVariation`
-**Display name:** "Latent Variation"
+**Display name:** "Minecraft PBR - Latent Variation" (pack-prefixed to match the other nodes)
 **Category:** "Minecraft PBR"
 **Return:** `("LATENT",)` — batched `(N, C, H, W)`
 
