@@ -5,6 +5,7 @@ from .derive_nodes import MinecraftDeriveAOHeight, MinecraftExtractEmission
 from .labpbr_nodes import MinecraftLabPBRPack
 from .metal_nodes import MinecraftMetalMask
 from .save_nodes import MinecraftSaveBedrock, MinecraftSaveLabPBR
+from .variation_nodes import MinecraftLatentVariation
 
 NODE_CLASS_MAPPINGS = {
     "MinecraftLabPBRPack": MinecraftLabPBRPack,
@@ -14,6 +15,7 @@ NODE_CLASS_MAPPINGS = {
     "MinecraftSaveBedrock": MinecraftSaveBedrock,
     "MinecraftDeriveAOHeight": MinecraftDeriveAOHeight,
     "MinecraftExtractEmission": MinecraftExtractEmission,
+    "MinecraftLatentVariation": MinecraftLatentVariation,
 }
 
 __all__ = ["NODE_CLASS_MAPPINGS"]

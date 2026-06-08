@@ -24,7 +24,7 @@ sys.modules[module_name] = module
 spec.loader.exec_module(module)
 
 mappings = module.NODE_CLASS_MAPPINGS
-assert len(mappings) == 7, f"expected 7 nodes, got {len(mappings)}"
+assert len(mappings) == 8, f"expected 8 nodes, got {len(mappings)}"
 
 for node_id, cls in mappings.items():
     schema = cls.define_schema()
