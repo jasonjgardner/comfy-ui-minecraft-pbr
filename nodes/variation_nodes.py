@@ -82,6 +82,9 @@ class MinecraftLatentVariation(io.ComfyNode):
         if count < 1:
             raise ValueError("count must be >= 1")
 
+        if "samples" not in samples:
+            raise ValueError("input LATENT is missing the 'samples' key")
+
         source = samples["samples"]
 
         if model is None:

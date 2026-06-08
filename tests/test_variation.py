@@ -52,6 +52,15 @@ def main():
     assert torch.equal(n1, n2), "explicit noise must make the result independent of seed"
     print("  ok explicit-noise seam")
 
+    # wrong-shaped caller noise is rejected with a clear error
+    bad_noise = torch.randn(2, C, H, W)  # count mismatch: 2 != 4
+    try:
+        make_variation_batch(source, seed=0, count=4, strength=0.3, noise=bad_noise)
+        raise AssertionError("expected ValueError for mismatched noise shape")
+    except ValueError:
+        pass
+    print("  ok noise-shape guard")
+
     # batched source uses index 0
     b_from_batched = make_variation_batch(source.unsqueeze(0), seed=42, count=4, strength=0.3)
     assert torch.equal(b_from_batched, batch), "batched source should vary index 0"

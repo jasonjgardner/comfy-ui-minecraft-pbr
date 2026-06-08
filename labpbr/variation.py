@@ -46,7 +46,7 @@ def slerp_latents(a: torch.Tensor, b: torch.Tensor, t: float) -> torch.Tensor:
 def _seeded_noise(source: torch.Tensor, seed: int, count: int) -> torch.Tensor:
     """``(count, *source.shape)`` Gaussian noise; variant ``i`` is seeded ``seed + i``."""
     def _one(i: int) -> torch.Tensor:
-        gen = torch.Generator(device="cpu").manual_seed(int(seed) + i)
+        gen = torch.Generator(device="cpu").manual_seed((int(seed) + i) % (2**64))
         return torch.randn(source.shape, generator=gen, dtype=source.dtype)
 
     return torch.stack([_one(i) for i in range(count)], dim=0).to(source.device)
